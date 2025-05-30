@@ -95,3 +95,22 @@ tarea_rapida()
 
 
 touch README.md LICENSE setup.py pyproject.toml .gitignore
+
+
+pip install pytest
+
+mkdir tests
+touch tests/test_logtools.py
+
+from logtools import loggear
+
+def test_loggear_output(capsys):
+    @loggear("test_func", nivel="INFO")
+    def test_func():
+        print("doing work")
+    test_func()
+    output = capsys.readouterr().out
+    assert "Llamando a" in output
+    assert "doing work" in output
+    assert "Finalizó" in output
+
